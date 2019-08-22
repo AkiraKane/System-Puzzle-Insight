@@ -31,6 +31,8 @@ docker-compose up -d
 We got `localhost refused to connect` error by nevagating to `localhost:8080`, which means something wrong with the Nginx.
 
 ### Issue1. Port Mapping
-when enabling client access to web server application from the internet, we usually map Docker container 80 to the host machine port 8080 (since we expose 8080 for localhost)
+when enabling client access to web server application from the internet, we usually map Docker container 80 to the host machine port 8080 (since we expose 8080 for localhost). By convention, we use `8080:80` which id `host port : container port` in docker-compose file
 
-by running 
+Also by running `docker ps -a` to list all the containers, running and otherwise, we spot something spicious
+
+<img src="containers.png"/>
