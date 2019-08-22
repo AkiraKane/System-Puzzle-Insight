@@ -6,7 +6,7 @@ Thought process and debugging system puzzle for Insight DevOps program
 
 In this project, the developer is using Postgres for the backend database, the Python Flask framework as an application server, and Nginx as a web server. The general Architecture diagram looks like the following:
 
-<p align="center"><img src="images/logo.png" style="height: 100%; width: 100%; max-width: 200px" /></p>
+<p align="center"><img src="architecture.png" style="height: 100%; width: 100%; max-width: 200px" /></p>
 
 Nignx is a web server that handles HTTP requests that come from the clients. Based on how you configure Nginx, it can directly provide the static connect back to the clients. Additionally, it can reverse proxy the requests to the WSGI (Gunicorn, Apache, etc) server to generate the dynamic content in the Flask web application to be delivered back to the user.
 
