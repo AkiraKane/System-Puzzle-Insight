@@ -28,4 +28,9 @@ docker-compose up -d db
 docker-compose run --rm flaskapp /bin/bash -c "cd /opt/services/flaskapp/src && python -c  'import database; database.init_db()'"
 docker-compose up -d
 ```
-We got `localhost refused to connect` error by nevagating to `localhost:8080`
+We got `localhost refused to connect` error by nevagating to `localhost:8080`, which means something wrong with the Nginx.
+
+### Issue1. Port Mapping
+when enabling client access to web server application from the internet, we usually map Docker container 80 to the host machine port 8080 (since we expose 8080 for localhost)
+
+by running 
