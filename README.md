@@ -24,6 +24,8 @@ Docker Compose is a tool for defining and running multi-container Docker applica
  After running these 3 commands 
  
 ```
- docker-compose up -d db
+docker-compose up -d db
 docker-compose run --rm flaskapp /bin/bash -c "cd /opt/services/flaskapp/src && python -c  'import database; database.init_db()'"
+docker-compose up -d
 ```
+We got `localhost refused to connect` error by nevagating to `localhost:8080`
