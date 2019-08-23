@@ -10,7 +10,7 @@ In this project, the developer is using Postgres for the backend database, the P
 
 Nignx is a web server that handles HTTP requests that come from the clients. Based on how you configure Nginx, it can directly provide the static connect back to the clients. Additionally, it can reverse proxy the requests to the WSGI (Gunicorn, Apache, etc) server to generate the dynamic content in the Flask web application to be delivered back to the user.
 
-Briefly underderstanding the usage of each components, next step is to run the containers and debug the errors.
+Briefly underderstanding the usage of each components, next step is to run the containers and debug the issues.
 
 ## 2.Degbuggig the whole Architecture
 
@@ -31,8 +31,36 @@ docker-compose up -d
 We got `localhost refused to connect` error by nevagating to `localhost:8080`, which means something wrong with the Nginx.
 
 ### Issue1. Port Mapping
-when enabling client access to web server application from the internet, we usually map Docker container 80 to the host machine port 8080 (since we expose 8080 for localhost). By convention, we use `8080:80` which id `host port : container port` in docker-compose file
 
-Also by running `docker ps -a` to list all the containers, running and otherwise, we spot something spicious
+when enabling client access to web server application from the internet, we usually map Docker container 80 to the host machine port 8080 (since we expose 8080 for localhost). By convention, we use `8080:80` which is `host port : container port` in docker-compose file
+
+Also by running `docker ps -a` to list all the containers, running and otherwise. We spot something suspicious
 
 <img src="containers.png"/>
+
+Hence, we have to fix order of the mapping ports in the docker-compose yaml file to `8080:80`  
+
+### Issue2. Wrong Port Exposing
+
+After deleting all running containers and re-executing the commands, we got the new error message, which is `502 Bad Gateway`. 
+By googling this error, we could narrow down to one reason: 
+
+`Nginx with other services/apps: try restarting the other service behind nginx and explore the logs to find the reason why it happened`
+
+Then we are trying to inspect the logs for the Nginx and Flaskapp by running `docker-compose logs <service-name>`, we found this error from Nginx logs.  
+
+` [error] 7#7: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.20.0.1, server: localhost, request: "GET / HTTP/1.1", upstream: "http://172.20.0.2:5001/", host: "localhost:8080"`
+
+Since it is refused to connect to upstream, which means the webapp and WSGI server (optional), we have to review the logs from service flaskapp, which shows as follows:
+
+`
+flaskapp_1  |  * Serving Flask app "app" (lazy loading)
+flaskapp_1  |  * Environment: production
+flaskapp_1  |    WARNING: This is a development server. Do not use it in a production deployment.
+flaskapp_1  |    Use a production WSGI server instead.
+flaskapp_1  |  * Debug mode: off
+flaskapp_1  |  * Running on http://0.0.0.0:5000/ 
+`
+
+
+
