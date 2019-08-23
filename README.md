@@ -35,4 +35,4 @@ when enabling client access to web server application from the internet, we usua
 
 Also by running `docker ps -a` to list all the containers, running and otherwise, we spot something spicious
 
-<img src="containers.png" width="200" height="120" />
+<img src="containers.png" width="100" height="120" />
