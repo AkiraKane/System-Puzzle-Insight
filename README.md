@@ -38,7 +38,7 @@ Also by running `docker ps -a` to list all the containers, running and otherwise
 
 <img src="containers.png"/>
 
-Hence, we have to fix order of the mapping ports in the docker-compose yaml file to `8080:80`  
+Hence, we have to fix the order of the mapping ports in the docker-compose yaml file to `8080:80`  
 
 ### Issue2. Wrong Port Exposing
 
@@ -61,6 +61,5 @@ flaskapp_1  |    Use a production WSGI server instead.
 flaskapp_1  |  * Debug mode: off
 flaskapp_1  |  * Running on http://0.0.0.0:5000/ 
 `
-
-
-
+We can see that the webapp is running on port 5000, However, when we build the flaskapp image in the Dockerfile, the port  
+is exposed to 5001. We can simply change port 5001 to 5000 in the Dockerfile. 
