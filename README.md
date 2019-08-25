@@ -51,8 +51,8 @@ Then we tried to inspect the logs from Nginx and Flaskapp by running `docker-com
 
 ` [error] 7#7: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.20.0.1, server: localhost, request: "GET / HTTP/1.1", upstream: "http://172.20.0.2:5001/", host: "localhost:8080"`
 
-The error is regarding refused connection to upstream, which exposes the port 5001. 
-Then we review the logs from flaskapp, which shows as follows:
+The error was regarding refused connection to upstream, which exposed to port 5001. 
+we coninued to view the logs from flaskapp, which shows as follows:
 
 `
 flaskapp_1  |  * Serving Flask app "app" (lazy loading)
