@@ -14,7 +14,7 @@ Briefly underderstanding the usage of each components, next step is to run the c
 
 ## 2.Degbuggig the whole Architecture
 
-Docker Compose is a tool for defining and running multi-container Docker applications. In our `docker-compose.yml` file, we have about 4 main services:
+Docker Compose is a tool for defining and running multi-container Docker applications. In our `docker-compose.yml` file, we have 4 main services:
 
  * db: our Postgres database for storing the clients' data.
  * flaskapp: a computer program implemented in Flask to perform the tasks over the internet.
@@ -32,7 +32,7 @@ We got `localhost refused to connect` error by nevagating to `localhost:8080`, w
 
 ### Issue1. Port Mapping
 
-when enabling client access to web server application from the internet, we usually map Docker container 80 to the host machine port 8080 (since we expose 8080 for localhost). By convention, we use `8080:80` which is `host port : container port` in docker-compose file
+when enabling client access to web server application from the internet, we usually map Docker container port 80 to the host machine port 8080 (since we expose 8080 to localhost). By convention, we use `8080:80` which is `<host port>:<container port>` in docker-compose file
 
 Also by running `docker ps -a` to list all the containers, running and otherwise. We spot something suspicious
 
