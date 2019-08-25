@@ -1,7 +1,7 @@
-System-Puzzle-Insight
+# System-Puzzle-Insight
 Thought process and debugging system puzzle for Insight DevOps program
 
-1. Understanding the Compments of the Architecture
+## 1. Understanding the Compments of the Architecture
 In this project, the developer is using Postgres for the backend database, the Python Flask framework as an application server, and Nginx as a web server. The general Architecture diagram looks like the following:
 
 
@@ -10,18 +10,22 @@ Nignx is a web server that handles HTTP requests that come from the clients. Bas
 
 Briefly underderstanding the usage of each components, next step is to run the containers and debug the issues.
 
-2.Degbuggig the whole Architecture
+## 2.Degbuggig the whole Architecture
+
 Docker Compose is a tool for defining and running multi-container Docker applications. In our docker-compose.yml file, we have 4 main services:
 
-db: our Postgres database for storing the clients' data.
-flaskapp: a computer program implemented in Flask to perform the tasks over the internet.
-nginx: web server to handle the HTTP requests.
-network: enable communication between the webapp and database containers running on the same daemon host.
+* db: our Postgres database for storing the clients' data.
+* flaskapp: a computer program implemented in Flask to perform the tasks over the internet.
+* nginx: web server to handle the HTTP requests.
+* network: enable communication between the webapp and database containers running on the same daemon host.
 After running these 3 commands
 
+```
 docker-compose up -d db
 docker-compose run --rm flaskapp /bin/bash -c "cd /opt/services/flaskapp/src && python -c  'import database; database.init_db()'"
 docker-compose up -d
+```
+
 We got localhost refused to connect error by navigating to localhost:8080, which means something wrong with the Nginx.
 
 Issue1. Port Mapping
