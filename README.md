@@ -59,7 +59,7 @@ Finally, we got the `Welcome` page by navigating to `localhost:8080`
 
 ### Issue3. HTTP Header Redundancy
 
-After filling the appropriate data in the table, the page got directed to `localhost%2Clocalhost:8080/success` instead of `localhost:8080/success`, it seemed like we had redundant localhosts in our HTTP header. Then, we revisited the flaskapp config file to see how the headers were setup. We spotted that there are actually 2 Host headers in the file. Thus, we simply commented out the first one, and re-ran the containers. Finally, we got re-directed to the correct Success page. However, new issue came out.
+After filling the appropriate data in the table, the page got directed to `localhost%2Clocalhost:8080/success` instead of `localhost:8080/success`, it seemed like we had redundant localhosts in our HTTP header. Then, we revisited the flaskapp config file to see how the headers were setup. We spotted that there are actually 2 Host headers in the file. Thus, we simply commented out the first one, and re-ran the containers. Finally, we got re-directed to the correct `Success` page. However, new issue came out.
 
 ### Issue4: Connection between Webapp and Database
 
@@ -71,6 +71,6 @@ It seemed I got some other errors. Next I SSH into the running database containe
 
 <img src="ssh.png"/>
 
-No data returned! There is no connection between the web app and database. I've decided to investigate the script, which serves the purpose of connection. In the `app.py`, I noticed that we did add and commit the data in the `add_item` method. However, in the success method, we only returned the list from the generator by using `all` method. However, we can make it more explicitly by interating each element in the list, then returned its string interpolation format. Here we can either returned all the records saved in the database or only returned the most recent record after user filled data in the table.
+No data returned! There is no connection between the web app and database. I've decided to investigate the script, which serves the purpose of connection. In the `app.py`, I noticed that we did add and commit the data in the `add_item` function. However, in the `success` function, we only returned the list from the generator by using `all` method. However, we can make it more explicitly by interating each element in the list, then returned its string interpolation format. Here we can either returned all the records saved in the database or only returned the most recent record after user filled data in the table.
 
 Finally, we fixed all the issues and made it to work for the developer !
