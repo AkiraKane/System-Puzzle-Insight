@@ -28,7 +28,7 @@ docker-compose up -d db
 docker-compose run --rm flaskapp /bin/bash -c "cd /opt/services/flaskapp/src && python -c  'import database; database.init_db()'"
 docker-compose up -d
 ```
-We got `localhost refused to connect` error by nevagating to `localhost:8080`, which means something wrong with the Nginx.
+We got `localhost refused to connect` error by navigating to `localhost:8080`, which means something wrong with the Nginx.
 
 ### Issue1. Port Mapping
 
@@ -63,12 +63,14 @@ flaskapp_1  |  * Debug mode: off
 flaskapp_1  |  * Running on http://0.0.0.0:5000/ 
 `
 
-We can see that the webapp is running on default port 5000, which are not matching to the upstream port. Next, we have inspect the flaskapp configfile and Dockerfile (used to build the docker image), the port is exposed to 5001, we just simply change it to 5000. Finally, we got the Welcome page by go to `localhost:8080`
+We can see that the webapp was listening on the default port 5000, which were not matching to the upstream port. Next, we also inspected the flaskapp configfile and Dockerfile (used to build the docker image for web app), both ports were exposed to 5001. Thus, we simply changed them to the default port 5000. 
+
+Finally, we got the Welcome page by navigating to `localhost:8080`
 
 ### Issue3. HTTP Header Redundancy
 
-After filling in the correct data in the form, the page got directed to `http://localhost%2Clocalhost:8080/success` instead of 
-`http://localhost:8080/success`, it looks like we have redundant localhosts in our HTTP header. Thus, we revisit the config file for the webapp to how the headers setup. We spot that there are actually 2 Host headers in the file. Then we simply comment out the first one, and re-run the containers. Finally, we got re-directed to the correct Success page. However, new issus comes out.
+After filling the appropriate data in the table, the page got directed to `localhost%2Clocalhost:8080/success` instead of 
+`localhost:8080/success`, it seemed like we had redundant localhosts in our HTTP header. Then, we revisited the flaskapp config file to see how the headers setup. We spotted that there are actually 2 Host headers in the file. Thus, we simply commented out the first one, and re-ran the containers. Finally, we got re-directed to the correct Success page. However, new issue came out.
 
 ### Issue4: Connection between Webapp and Database
 
