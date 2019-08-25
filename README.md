@@ -75,3 +75,11 @@ After filling in the correct data in the form, the page got directed to `http://
 In the Success page, we did not see the data that we just typed in. It seems that the data was not read in the Postgres database from web app. To confirm my initial thought, first, I view the logs from databse container
 
 <img src="postgres.png"/>
+
+It seems I got some other errors. Next I ssh into the running database container to view the data by using `docker exec -it 0e7ac5530fbb /bin/bash`
+
+<img src="ssh.png"/>
+
+
+
+
