@@ -74,16 +74,16 @@ After filling the appropriate data in the table, the page got directed to `local
 
 ### Issue4: Connection between Webapp and Database
 
-In the Success page, we did not see the data that we just typed in. It seems that the data was not read in the Postgres database from web app. To confirm my initial thought, first, I view the logs from databse container
+In the Success page, we did not see the data that we just typed in. It seemed that the data was not read in the Postgres database from web app. To confirm my initial thought, first I viewed the logs from databse container
 
 <img src="postgres.png"/>
 
-It seems I got some other errors. Next I ssh into the running database container to view the data by using `docker exec -it 0e7ac5530fbb /bin/bash`
+It seemed I got some other errors. Next I SSH into the running database container to view the data by using `docker exec -it <container-name> /bin/bash`
 
 <img src="ssh.png"/>
 
-No data returned! There is no connection between the web app and database. I've decided to investigate the script, which serves the purpose of connection. In the `app.py`, I noticed that we did add and commit the data in the `add_item` method. However, in the `success` method, we only return the list from the generator by using `all` method. However, we can make it more explicitly by interating each element in the list, then return its string interpolation format. Here we can either return all the records saved in the database or just return the most recent record after user fills the table. 
+No data returned! There is no connection between the web app and database. I've decided to investigate the script, which serves the purpose of connection. In the `app.py`, I noticed that we did add and commit the data in the `add_item` method. However, in the `success` method, we only returned the list from the generator by using `all` method. However, we can make it more explicitly by interating each element in the list, then returned its string interpolation format. Here we can either returned all the records saved in the database or only returned the most recent record after user filled data in the table. 
 
-Finally, we fix all the issues and make it to work !
+Finally, we fixed all the issues and made it to work for the developer !
 
 
