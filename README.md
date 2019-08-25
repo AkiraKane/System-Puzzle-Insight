@@ -70,7 +70,7 @@ We can see that the webapp is running on default port 5000, which are not matchi
 After filling in the correct data in the form, the page got directed to `http://localhost%2Clocalhost:8080/success` instead of 
 `http://localhost:8080/success`, it looks like we have redundant localhosts in our HTTP header. Thus, we revisit the config file for the webapp to how the headers setup. We spot that there are actually 2 Host headers in the file. Then we simply comment out the first one, and re-run the containers. Finally, we got re-directed to the correct Success page. However, new issus comes out.
 
-### Issue4: 
+### Issue4: Connection between Webapp and Database
 
 In the Success page, we did not see the data that we just typed in. It seems that the data was not read in the Postgres database from web app. To confirm my initial thought, first, I view the logs from databse container
 
@@ -80,6 +80,8 @@ It seems I got some other errors. Next I ssh into the running database container
 
 <img src="ssh.png"/>
 
-No data returned! There is no connection between the web app and database. I've decided to investigate the script, which serves the purpose of connection. In the `app.py`, I noticed that we did add and commit the data in the `add_item` method. However, in the `success` method, we only return the collection of
+No data returned! There is no connection between the web app and database. I've decided to investigate the script, which serves the purpose of connection. In the `app.py`, I noticed that we did add and commit the data in the `add_item` method. However, in the `success` method, we only return the list from the generator by using `all` method. However, we can make it more explicitly by interating each element in the list, then return its string interpolation format. Here we can either return all the records saved in the database or just return the most recent record after user fills the table. 
+
+Finally, we fix all the issues and make it to work !
 
 
