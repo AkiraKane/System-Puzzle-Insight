@@ -51,7 +51,8 @@ Then we are trying to inspect the logs for the Nginx and Flaskapp by running `do
 
 ` [error] 7#7: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.20.0.1, server: localhost, request: "GET / HTTP/1.1", upstream: "http://172.20.0.2:5001/", host: "localhost:8080"`
 
-Since it is refused to connect to upstream, which means the webapp and WSGI server (optional), we have to review the logs from service flaskapp, which shows as follows:
+The error is regarding refused connection to upstream, which exposes the port 5001. 
+Then we review the logs from flaskapp, which shows as follows:
 
 `
 flaskapp_1  |  * Serving Flask app "app" (lazy loading)
@@ -62,6 +63,15 @@ flaskapp_1  |  * Debug mode: off
 flaskapp_1  |  * Running on http://0.0.0.0:5000/ 
 `
 
-We can see that the webapp is running on port 5000, However, when we build the flaskapp image in the Dockerfile, the port is exposed to 5001. We can simply change port 5001 to 5000 in the Dockerfile.
+We can see that the webapp is running on default port 5000, which are not matching to the upstream port. Next, we have inspect the flaskapp configfile and Dockerfile (used to build the docker image), the port is exposed to 5001, we just simply change it to 5000. Finally, we got the Welcome page by go to `localhost:8080`
 
+### Issue3. HTTP Header Redundancy
 
+After filling in the correct data in the form, the page got directed to `http://localhost%2Clocalhost:8080/success` instead of 
+`http://localhost:8080/success`, it looks like we have redundant localhosts in our HTTP header. Thus, we revisit the config file for the webapp to how the headers setup. We spot that there are actually 2 Host headers in the file. Then we simply comment out the first one, and re-run the containers. Finally, we got re-directed to the correct Success page. However, new issus comes out.
+
+### Issue4: 
+
+In the Success page, we did not see the data that we just typed in. It seems that the data was not read in the Postgres database from web app. To confirm my initial thought, first, I view the logs from databse container
+
+<img src="postgres.png"/>
