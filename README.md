@@ -80,6 +80,6 @@ It seems I got some other errors. Next I ssh into the running database container
 
 <img src="ssh.png"/>
 
-
+No data returned! There is no connection between the web app and database. I've decided to investigate the script, which serves the purpose of connection. In the `app.py`, I noticed that we did add and commit the data in the `add_item` method. However, in the `success` method, we only return the collection of
 
 
