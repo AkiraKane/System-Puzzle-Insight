@@ -47,7 +47,7 @@ By googling this error, we could narrow down to one reason:
 
 `Nginx with other services/apps: try restarting the other service behind nginx and explore the logs to find the reason why it happened`
 
-Then we are trying to inspect the logs for the Nginx and Flaskapp by running `docker-compose logs <service-name>`, we found this error from Nginx logs.  
+Then we tried to inspect the logs from Nginx and Flaskapp by running `docker-compose logs <service-name>`, we found this error from Nginx logs.  
 
 ` [error] 7#7: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 172.20.0.1, server: localhost, request: "GET / HTTP/1.1", upstream: "http://172.20.0.2:5001/", host: "localhost:8080"`
 
